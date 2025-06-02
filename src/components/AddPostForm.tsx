@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { usePostStore } from '../stores/postStore'
 import { useState } from 'react'
 import Loader from './Loader'
+import { useAuthStore } from '../stores/authStore'
 
 function AddPostForm() {
   const {
@@ -20,6 +21,9 @@ function AddPostForm() {
 
   const posts = usePostStore((state) => state.posts)
   const setPosts = usePostStore((state) => state.setPosts)
+
+  const user = useAuthStore((state) => state.user)
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSubmitPost = (formData: CreatePostType) => {
@@ -31,7 +35,7 @@ function AddPostForm() {
 
         reset()
 
-        setPosts([...posts, data])
+        setPosts([...posts, { ...data, user }])
 
         setIsLoading(false)
       })
