@@ -1,13 +1,48 @@
-import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import type { LoginType } from '../types/user'
+import { login } from '../services/auth.services'
+import { toast } from 'react-toastify'
+import { useAuthStore } from '../stores/authStore'
 
 function LoginPage() {
+  const navigate = useNavigate()
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginType>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  const setToken = useAuthStore((state) => state.setToken)
+
+  const handleLogin = (formData: LoginType) => {
+    login(formData)
+      .then((data) => {
+        setToken(data?.token)
+
+        reset()
+
+        navigate('/admin')
+      })
+      .catch((err) => {
+        toast.error(err.message)
+      })
+  }
+
   return (
     <div className="flex flex-col gap-4 m-6">
       <h2 className="text-2xl font-medium">Login to your account</h2>
 
       <form
         className="flex flex-col gap-2 bg-white p-4 rounded-md border"
-        onSubmit={() => {}}
+        onSubmit={handleSubmit(handleLogin)}
         noValidate
       >
         <div className="flex flex-col gap-1">
@@ -17,7 +52,17 @@ function LoginPage() {
             type="email"
             id="email"
             placeholder="testino@example.com"
+            {...register('email', {
+              required: 'Provide an email',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Provide a valid email address',
+              },
+            })}
           />
+          {errors.email ? (
+            <p className="text-red-400">{errors.email.message}</p>
+          ) : null}
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="password">Password:</label>
@@ -26,7 +71,13 @@ function LoginPage() {
             type="password"
             id="password"
             placeholder="supersecret123"
+            {...register('password', {
+              required: 'Provide a password',
+            })}
           />
+          {errors.password ? (
+            <p className="text-red-400">{errors.password.message}</p>
+          ) : null}
         </div>
         <div className="flex flex-col gap-2 mt-2">
           <button
