@@ -1,9 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { ToastContainer } from 'react-toastify'
+import { useAuthStore } from '../stores/authStore'
 
 function AppLayout() {
-  return (
+  const token = useAuthStore((state) => state.token)
+
+  return token ? (
     <div className="flex flex-col min-h-screen bg-[#F5F7FD]">
       <Navbar />
 
@@ -13,6 +16,8 @@ function AppLayout() {
 
       <ToastContainer />
     </div>
+  ) : (
+    <Navigate to={'/auth/login'} />
   )
 }
 
