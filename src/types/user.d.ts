@@ -15,4 +15,4 @@ export type RegisterType = Pick<
   'name' | 'username' | 'email' | 'password'
 >
 
-export type AuthUser = Omit<IUser, 'password'>
+export type AuthUserType = Omit<IUser, 'password'>
