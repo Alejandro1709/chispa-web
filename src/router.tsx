@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage'
 import FeedPage from './pages/FeedPage'
 import AppLayout from './layouts/AppLayout'
 import HomePage from './pages/HomePage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function Router() {
   return (
@@ -20,6 +21,8 @@ function Router() {
         </Route>
 
         <Route path="/" element={<HomePage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )
