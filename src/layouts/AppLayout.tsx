@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import { ToastContainer } from 'react-toastify'
 
 function AppLayout() {
   return (
@@ -9,6 +10,8 @@ function AppLayout() {
       <main className="flex flex-col gap-4 flex-1 m-6 md:container md:mx-auto">
         <Outlet />
       </main>
+
+      <ToastContainer />
     </div>
   )
 }

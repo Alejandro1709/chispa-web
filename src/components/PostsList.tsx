@@ -8,10 +8,10 @@ type PostsListProps = {
 function PostsList({ posts }: PostsListProps) {
   return (
     <div className="flex flex-col gap-4">
-      {posts.length > 0 ? (
+      {posts && posts.length > 0 ? (
         posts.map((post) => <PostCard key={post._id} post={post} />)
       ) : (
-        <p>No posts were found</p>
+        <p>No posts were found.</p>
       )}
     </div>
   )
