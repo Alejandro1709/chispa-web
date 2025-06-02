@@ -9,3 +9,8 @@ export interface IUser {
 }
 
 export type LoginType = Pick<IUser, 'email' | 'password'>
+
+export type RegisterType = Pick<
+  IUser,
+  'name' | 'username' | 'email' | 'password'
+>
