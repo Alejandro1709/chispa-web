@@ -7,3 +7,5 @@ export interface IPost {
   createdAt: Date
   updatedAt: Date
 }
+
+export type CreatePostType = Pick<IPost, 'content'>
