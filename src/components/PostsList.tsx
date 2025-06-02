@@ -1,11 +1,9 @@
-import type { IPost } from '../types/post'
+import { usePostStore } from '../stores/postStore'
 import PostCard from './PostCard'
 
-type PostsListProps = {
-  posts: IPost[]
-}
+function PostsList() {
+  const posts = usePostStore((state) => state.posts)
 
-function PostsList({ posts }: PostsListProps) {
   return (
     <div className="flex flex-col gap-4">
       {posts && posts.length > 0 ? (

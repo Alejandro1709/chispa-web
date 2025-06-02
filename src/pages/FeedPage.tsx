@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import AddPostForm from '../components/AddPostForm'
 import PostsList from '../components/PostsList'
 import { getPosts } from '../services/post.services'
 import { toast } from 'react-toastify'
+import { usePostStore } from '../stores/postStore'
 
 function FeedPage() {
-  const [posts, setPosts] = useState([])
+  const setPosts = usePostStore((state) => state.setPosts)
 
   useEffect(() => {
     getPosts()
@@ -21,7 +22,7 @@ function FeedPage() {
     <>
       <AddPostForm />
 
-      <PostsList posts={posts} />
+      <PostsList />
     </>
   )
 }
