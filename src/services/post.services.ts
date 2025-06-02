@@ -37,3 +37,27 @@ export const createPost = async (formData: CreatePostType) => {
     }
   }
 }
+
+export const updatePost = async (id: string, formData: CreatePostType) => {
+  try {
+    const { data } = await api.put(`/api/v1/posts/${id}`, formData)
+
+    return data
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message)
+    }
+  }
+}
+
+export const deletePost = async (id: string) => {
+  try {
+    const { data } = await api.delete(`/api/v1/posts/${id}`)
+
+    return data
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message)
+    }
+  }
+}

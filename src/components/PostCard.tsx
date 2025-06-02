@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify'
+import { deletePost } from '../services/post.services'
 import { useAuthStore } from '../stores/authStore'
 import type { IPost } from '../types/post'
+import { usePostStore } from '../stores/postStore'
 
 type PostCardProps = {
   post: IPost
@@ -7,6 +10,27 @@ type PostCardProps = {
 
 function PostCard({ post }: PostCardProps) {
   const user = useAuthStore((state) => state.user)
+
+  const posts = usePostStore((state) => state.posts)
+  const setPosts = usePostStore((state) => state.setPosts)
+
+  const handleDeletePost = (postId: string) => {
+    const answer = confirm('Are you sure?')
+
+    if (answer) {
+      deletePost(postId)
+        .then(() => {
+          toast.success('Post removed!')
+
+          const updatedPosts = posts.filter((p) => p._id !== postId)
+
+          setPosts(updatedPosts)
+        })
+        .catch((err) => {
+          toast.error(err.message)
+        })
+    }
+  }
 
   return (
     <div className="flex flex-col gap-2 bg-white shadow-lg rounded-md p-4">
@@ -18,7 +42,10 @@ function PostCard({ post }: PostCardProps) {
           <button className="bg-[#8BC3D6] hover:bg-[#79b3c6] p-2 rounded font-semibold text-white cursor-pointer">
             Edit Post
           </button>
-          <button className="bg-[#C65757] hover:bg-[#bf6c6c] p-2 rounded font-semibold text-white cursor-pointer">
+          <button
+            className="bg-[#C65757] hover:bg-[#bf6c6c] p-2 rounded font-semibold text-white cursor-pointer"
+            onClick={() => handleDeletePost(post._id)}
+          >
             Delete Post
           </button>
         </div>
