@@ -6,6 +6,7 @@ import FeedPage from './pages/FeedPage'
 import AppLayout from './layouts/AppLayout'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
+import EditPostPage from './pages/EditPostPage'
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
 
         <Route path="/admin" element={<AppLayout />}>
           <Route index={true} element={<FeedPage />} />
+          <Route path="posts/:id/edit" element={<EditPostPage />} />
         </Route>
 
         <Route path="/" element={<HomePage />} />

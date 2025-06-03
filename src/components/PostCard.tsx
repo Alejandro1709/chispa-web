@@ -3,6 +3,7 @@ import { deletePost } from '../services/post.services'
 import { useAuthStore } from '../stores/authStore'
 import type { IPost } from '../types/post'
 import { usePostStore } from '../stores/postStore'
+import { Link } from 'react-router-dom'
 
 type PostCardProps = {
   post: IPost
@@ -39,9 +40,12 @@ function PostCard({ post }: PostCardProps) {
 
       {post.user._id === user?._id ? (
         <div className="flex flex-row justify-end gap-2">
-          <button className="bg-[#8BC3D6] hover:bg-[#79b3c6] p-2 rounded font-semibold text-white cursor-pointer">
+          <Link
+            to={`/admin/posts/${post._id}/edit`}
+            className="bg-[#8BC3D6] hover:bg-[#79b3c6] p-2 rounded font-semibold text-white cursor-pointer"
+          >
             Edit Post
-          </button>
+          </Link>
           <button
             className="bg-[#C65757] hover:bg-[#bf6c6c] p-2 rounded font-semibold text-white cursor-pointer"
             onClick={() => handleDeletePost(post._id)}
